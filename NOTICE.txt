@@ -1,0 +1,6 @@
+shotnoise~
+    Copyright [2015] Paulo Casaes
+
+      This product includes software developed at
+      Github (https://github.com/pcasaes/saturator).
+

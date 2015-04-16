@@ -1,0 +1,111 @@
+04/16/15 12:12 PM
+	Added yosemite build, changed license to Apache 2.0
+
+11/12/09 21:11 v0.3.3
+	Added a winxp build
+
+7/2/08 16:34 PM paulo
+	Made expensive algorithm more efficient.
+	
+v0.3.2
+
+7/2/08 15:44 PM paulo
+	put TD algorithms in saturator_td.c
+	
+7/2/08 15:14 PM paulo
+	Fixed several TD bugs. Proper transformations are:
+	Pow: thresh + (1-thresh)[(factor-thresh)/(1-thresh) ] ^ param
+	Cos: thresh + (1-thresh) * [0.5 + 0.5 * cos((factor-thresh)pi/(1-thresh) - pi)]
+	 
+
+v0.3.1
+
+7/2/08 12:18 PM paulo
+	Fixed autogain bug on expensive TD algorithm.
+	Fixed help for expensive TD.
+	
+7/2/08 4:28 AM paulo
+	Added new time-dependent implementation. 
+	Now threshold varies. Is more expensive and not the default.
+	Use cheap method to enable and disable.
+	Added saturator_tresh~ object which  outputs current
+	thresh on second outlet. Only relevant for expensive algorithm.
+	
+v0.3.0
+
+7/2/08 12:46 AM paulo
+	Cleaned code to use float more.
+
+7/2/08 12:36 AM paulo
+	Added any N-Polynomial.
+	Cleaned code to use derived form only.
+	Arbitrarily limited to 736.
+
+7/2/08 12:05 AM paulo
+	Added Order 4 and 5, quartic function.
+
+7/1/08 11:40 PM paulo
+	Added Order 4, quartic function.
+
+v0.2.2
+
+7/1/08 7:20 PM paulo
+	Made it manually set factor when duration = 0. Before it was behaving as if duration = 1 when it was actually 0.
+	Fixed help-saturator. Before time dependent controls where affecting transfer function display.
+7/1/08 6:38 PM paulo
+	fixed comment. rms/sec is supposed to be rms/ms
+
+	
+v0.2.1
+
+7/1/08 1:16 PM paulo
+	commented data structure.
+	fixed bug when thresh=1 (was not iterating ins and outs).
+	added an autogain method to enable/disable autogain. (default is enabled).
+	changed makefile to copy build to DESTINATION in darwin.
+
+v0.2.0
+
+6/30/08 9:52 PM paulo
+	finished help-saturator~.pd and added to build install.
+
+6/30/08 4:16 PM paulo
+	added help-saturator~.pd
+	TODO: requires that the build installs it in the right place.
+	
+6/30/08 4:14 PM paulo
+	separated vu into separate object: saturator_vu~.
+	now requires that saturator be loaded to load the classes
+		of saturator~ and saturator_vu~
+	fixed some bugs in vu.
+	
+v0.1.3
+
+4/21/08 1:02 PM paulo
+	Now with VU attenuation on second outlet. 0 means no attenuation
+	
+v0.1.2
+
+4/21/08 11:47 AM paulo
+	fixed init bug. was not setting threshold on init
+	
+4/20/08 3:11 PM paulo
+	Now has different type of attack and release. can be:
+		linear
+		pow, raised by passed value
+		cos: cos(x*pi-pi)/2 + .5
+		
+v0.1.1.1
+
+4/20/08 1:19 PM paulo
+	fixed key get time bug. Cause the tangents to not much up.
+	
+v0.1.1
+
+3/23/08 12:11 PM paulo
+	*** empty log message ***
+	
+v0.1.0
+
+3/23/08 13:04 PM paulo
+	version used in audio rebel february
