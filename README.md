@@ -1,3 +1,5 @@
+The saturator~ external performs a nonlinear compression on the input signal based on threshold (rms), attack/release (ms), push/pull, autogain, and polynomial order (N = [2, 736]) settings. It works by deriving a polynomial tangent to y=x at some threshold between 0 and 1 where there's a maximum (peak) at x=1. It uses one of two time dependent algorithms for the attack and release.
+
 New: build for winxp linked to pd-exteded 0.40.3
 This build was made using MinGW
 
