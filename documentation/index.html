@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>saturator~: nonlinear compressor</title>
+
+<style type="text/css">
+.rightImagesBlock { display: none; }
+
+div.figures img {
+display: block; margin: 0 auto;
+}
+
+div.figures {
+margin-bottom: 1em;
+}
+
+div.figures td {
+  padding-left: 1em;
+  padding-right: 1em;
+  text-align: center;
+}
+
+div.plain p {
+  text-align: justify;
+  padding: 1em;
+}
+</style>
+
+</head>
+
+<body>
+	<h1>Saturator~: nonlinear compressor</h1>
+	<div class="documentDescription">Nonlinear compressor. Uses any N-polynomial for nonlinear part. Has thresh, attack and release settings.</div>
+        
+          
+	          <div class="plain">
+<p>
+<img style="width: 80%;display:block;" src="help.png" alt="help for saturator~ object" />
+The <a href="https://github.com/pcasaes/saturator">saturator~</a> external
+performs a nonlinear compression on the input signal based on
+threshold (rms), attack/release (ms), push/pull, autogain, and
+polynomial order (N = [2, 736]) settings. It works by deriving a polynomial
+tangent to y=x at some threshold between 0 and 1 where there's a
+maximum (peak) at x=1. It uses one of two time dependent algorithms for the attack and release.
+</p>
+<h2>Transfer Function (threshold and order)</h2>
+<p>
+The compressor's transfer function is a two part function where <strong>f(x)=x</strong> when <strong>x &lt; threshold</strong> and <strong>f(x) = some polynomial function</strong> when <strong>x &gt;= threshold</strong>. Some polynomial function can be  of any order but must have a maximum at x=1. 
+</p><p>
+saturator~'s polynomial functions are relatively simple. There are two cases. When N is even <strong>f(x) = -1r(x-1)^N+1-c</strong>, when it's odd <strong>f(x) = r(x-1)^N+1+c</strong>. We solve for the coefficient <strong>r</strong> and <strong>c</strong> by deriving the function's tangent with <strong>y=x</strong> at some thresh <strong>h</strong>. We can do this since <strong>f(h) = h</strong> and <strong>f'(h)=1</strong>. The latter is true because the derivative of a function solved at some point gives the <strong>m</strong> of some line <strong>y=mx</strong> tangent with the function at that point. Since <strong>y=x</strong> then <strong>m=1</strong>.
+</p><p>
+Solving for <strong>r</strong> and <strong>c</strong> with even N-polynomials gives us <strong>r=-1/ [N (x-1)^(N-1)]</strong> and <strong>c = -r(h-1)^N+1-h</strong>, while for odd it's <strong>r = 1/ [N (x-1)^(N-1)]</strong> and <strong>c= h - [r(h-1)^N+1]</strong>.
+</p>
+<div align="center" class="figures">
+<table cellpadding="0" border="0"><tr><td>
+<img src="2quad50.png" alt="two part quadratic transfer function with threshold at 0.5 rms"/>
+two part quadratic transfer function with threshold at 0.5 rms</td>
+<td><img src="2quad75.png" alt="two part quadratic transfer function with threshold at 0.75 rms"/>
+two part quadratic transfer function with threshold at 0.75 rms
+</td></tr><tr><td>
+<img src="2cubic50.png" alt="two part cubic transfer function with threshold at 0.5 rms"/>
+two part cubic transfer function with threshold at 0.5 rms
+</td><td>
+<img src="2cubic75.png" alt="two part cubic transfer function with threshold at 0.75 rms"/>
+two part cubic transfer function with threshold at 0.75 rms
+</td></tr></table>
+</div>
+<p>The threshold is set with the <em>thresh number</em> method. The order is set with the <em>order number</em> method. An invalid threshold (not [0.0,1.0]) or order (below 2 or above 736) will do nothing. The limit of 736 is chosen arbitrarily. Above this value the transfer function doesn't change much.</p>
+<p>
+When passing through the transfer function the signal is tested against the threshold. If it is above the threshold it is then tested for push/pull. Passing that it is then evaluated with the polynomial part of the function. If none of these conditions are met, it is left alone.
+</p>
+<h3>Note</h3>
+<p>The input signal will be clipped at -1,1. If this were not the case then it would go over the peak of the polynomial function.</p>
+<h3>Improvements</h3>
+<p>The code could be further optimized or adapted to work with double precision floating points (64bits).</p>
+<h2>Time dependent variables (attack/release)</h2>
+<p>The time dependent portion of the compression works in one of two ways. The first (default) is performed by scaling the peak (-1,1) of the original signal to the threshold and then pumping that into the compression. The second varies the working threshold from 1 to the set threshold.</p>
+<p>First the signal is tested against the threshold. Then a factor used to scale the signal is determined. This is done in a recursive way. The factor will arbitrarily start at 1. When the signal is above the threshold a value in amplitude per time multiplied by the time since the last recursion will be added to the factor (never allowing it above 1). When the signal is below the threshold this value will be subtracted (never allowing it below the threshold).
+</p><p>
+When the factor is set to 1 then the compression will be in full force and when it's set to the threshold, there will be no compression.
+</p><p>
+In saturator~ the amplitude per time is determined in rms/ms by dividing the threshold by the duration: <strong>thresh / attack in ms</strong> and <strong>thresh / release in ms</strong>. When the duration is 0 then the factor is directly set to 1 for attack, or thresh for release. The durations are set by the methods <em>attack number</em> and <em>release number</em>.
+</p><p>
+The factor is then scaled by a one of three possible transformations. The default is a linear transformation which leaves the factor alone. The second raises the factor by some value, <strong>thresh + (1-thresh)[(factor-thresh)/(1-thresh) ] ^ param</strong>. This gives a faster rate. The third is <strong>thresh + (1-thresh) * [0.5 + 0.5 * cos((factor-thresh)pi/(1-thresh) - pi)]</strong> which gives a smooth curve, starting slower than linear but ending faster than linear. To change transformation use the method <em>attack type (number)</em>, where type is either linear, pow or cos and number is only relevant for pow. The same works for release, <em>release type (number)</em>.
+</p><h3>Cheap Algorithm</h3><p>
+Now one of two methods are used. The first scales the original signal by the transformed factor. This scaled signal will then run through the transfer function. Afterwards the signal is rescaled back to where it's supposed to be, by the inverse of the transformed factor.
+</p><h3>Expensive Algorithm</h3><p>
+The second methods subtracts the transformed factor from 1, adds it to the set threshold and that becomes the new working threshold. <strong>r</strong> and <strong>c</strong> are recalculated from this new threshold. <strong>autogain</strong> and the amplitude per time value are left as is; based on the set threshold. This method does more work per block than the first.
+</p><p>
+To change the TD implementation use the method <em>cheap number</em>, where 0 sets the expensive algorithm and any other number sets the cheap one.
+</p>
+<h3>Improvements</h3>
+<p>
+More factor transformations should be devised. Perhaps a rate of change based threshold should be considered (based on transients).
+</p>
+<h2>Sign (push/pull)</h2>
+<p>The push/pull settings dictate which sign of the signal will pass
+through the transfer function. Push corresponds to the negative portion
+while pull corresponds to the positive portion. These settings are used
+to create asymmetrical transfer functions. For example, if pull is not
+set then the positive portion will not be compressed.</p>
+<p>there are three methods to set push/pull: <em>push</em>, <em>pull</em> and <em>pushpull</em></p>
+<h2>Auto Gain</h2>
+<p>By default the object will perform an autogain. This can be disabled by the method <em>autogain number</em> where number is 0 to disable and any other to enable.</p>
+<p>
+The autogain works by taking the result of the time dependent transfer function and dividing it by <strong>1 - c</strong> in case of even N-polynomials and <strong>1 + c</strong> in case of odd.
+</p>
+</div>
+</body>
+
+</html>
