@@ -22,5 +22,5 @@ You must load a saturator object to load saturator~ and saturator_vu~ classes.
 You can automatically do so by loading saturator at startup:
 pd -lib saturator
 
-(C) 2015, Paulo Casaes irmaosaturno@gmail.com
+(C) 2015, Paulo Casaes pcasaes@gmail.com
 APACHE LICENSE 2.0
