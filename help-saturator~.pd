@@ -1,9 +1,12 @@
-#N canvas 111 372 758 439 10;
+#N canvas 317 121 758 439 10;
+#X declare -stdpath exrta/zexy;
+#X declare -lib saturator;
+#X declare -stdlib zexy;
 #X obj 39 370 saturator~;
-#N canvas 0 0 309 185 volume 0;
+#N canvas 0 22 309 185 volume 0;
 #X obj 51 17 inlet~;
 #X obj 53 62 *~;
-#X floatatom 97 82 5 0 100 0 - - -;
+#X floatatom 97 82 5 0 100 0 - - -, f 5;
 #X obj 94 106 dbtorms;
 #X obj 135 57 tabwrite~ hp-sat.form;
 #X obj 136 23 r hp-sat.form.rec;
@@ -39,7 +42,7 @@
 -1;
 #X obj 459 19 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X floatatom 482 119 5 0 0 0 - - -;
+#X floatatom 482 119 5 0 0 0 - - -, f 5;
 #X obj 215 174 tabwrite~ hp-sat.curve;
 #X obj 416 179 *~ 2;
 #X obj 421 199 -~ 1;
@@ -64,12 +67,12 @@
 #X obj 65 99 + 1;
 #X obj 287 286 spigot;
 #X obj 382 315 sel 1;
-#X floatatom 365 264 5 0 0 0 - - -;
+#X floatatom 365 264 5 0 0 0 - - -, f 5;
 #X obj 243 229 env~;
 #X obj 501 258 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #X obj 437 237 f;
-#N canvas 0 0 450 300 cheap 0;
+#N canvas 0 22 450 300 cheap 0;
 #X obj 183 27 inlet;
 #X obj 185 132 unpack s f;
 #X obj 219 187 f;
@@ -103,7 +106,7 @@
 #X msg 528 241 autogain \$1;
 #X msg 536 275 0;
 #X obj 197 115 sel 1 0;
-#N canvas 0 0 450 300 thresh 0;
+#N canvas 0 22 450 300 thresh 0;
 #X obj 183 27 inlet;
 #X obj 185 132 unpack s f;
 #X obj 219 187 f;
@@ -133,7 +136,7 @@
 #X connect 10 0 6 1;
 #X connect 12 0 2 0;
 #X restore 499 155 pd thresh 1;
-#N canvas 0 0 450 300 autogain 0;
+#N canvas 244 339 450 300 autogain 0;
 #X obj 183 27 inlet;
 #X obj 185 132 unpack s f;
 #X obj 219 187 f;
@@ -236,7 +239,7 @@
 #X connect 2 0 4 0;
 #X connect 3 0 1 0;
 #X restore 68 341 pd controls;
-#N canvas 0 0 450 300 signals 0;
+#N canvas 0 22 450 300 signals 0;
 #X obj 208 204 outlet~;
 #X obj 289 105 osc~ 3;
 #X obj 257 136 *~;
@@ -286,45 +289,47 @@
 #X connect 19 0 2 0;
 #X connect 21 0 20 0;
 #X restore 47 319 pd signals;
-#N canvas 0 0 450 300 init 0;
+#N canvas 0 22 450 300 init 0;
 #X obj 164 80 s _hp-sat.thresh;
 #X msg 165 51 94;
 #X obj 182 28 del 22;
 #X obj 192 5 loadbang;
 #X obj 199 149 s _hp-sat.order;
 #X msg 202 120 2;
-#X obj 34 208 saturator;
 #X text 105 210 most be loaded to load classes;
 #X msg 330 85 1;
 #X obj 310 119 s _hp-sat.autogain;
 #X obj 320 140 s _hp-sat.sine;
 #X obj 327 163 s _hp-sat.cheap;
+#X obj 28 137 declare -stdpath exrta/zexy;
+#X obj 26 191 declare -lib saturator;
+#X obj 40 158 declare -stdlib zexy;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 2 0 5 0;
-#X connect 2 0 8 0;
+#X connect 2 0 7 0;
 #X connect 3 0 2 0;
 #X connect 5 0 4 0;
-#X connect 8 0 9 0;
-#X connect 8 0 10 0;
-#X connect 8 0 11 0;
+#X connect 7 0 8 0;
+#X connect 7 0 9 0;
+#X connect 7 0 10 0;
 #X restore 191 401 pd init;
-#N canvas 0 0 450 300 graph3 0;
+#N canvas 0 22 450 300 (subpatch) 0;
 #X array hp-sat.curve 100 float 0;
 #X coords 0 1 99 -1 200 140 1;
 #X restore 256 289 graph;
-#N canvas 0 0 450 300 graph4 0;
+#N canvas 0 22 450 300 (subpatch) 0;
 #X array hp-sat.form 20000 float 2;
 #X coords 0 1 19999 -1 200 140 1;
 #X restore 534 292 graph;
 #X obj 252 223 cnv 15 133 22 empty empty empty 20 12 0 14 -260818 -66577
 0;
-#X floatatom 258 205 5 2 736 0 - _hp-sat.order -;
+#X floatatom 258 205 5 2 736 0 - _hp-sat.order -, f 5;
 #X obj 258 261 s hp-sat.ctrl;
 #X msg 258 226 order \$1;
 #X obj 122 188 cnv 15 100 22 empty empty empty 20 12 0 14 -260818 -66577
 0;
-#X floatatom 124 149 5 0 100 0 - _hp-sat.thresh -;
+#X floatatom 124 149 5 0 100 0 - _hp-sat.thresh -, f 5;
 #X obj 125 216 s hp-sat.ctrl;
 #X msg 125 192 thresh \$1;
 #X obj 125 169 dbtorms;
@@ -336,14 +341,14 @@
 #X obj 168 85 s hp-sat.ctrl;
 #X obj 512 228 cnv 15 100 22 empty empty empty 20 12 0 14 -260818 -66577
 0;
-#X floatatom 518 210 5 0 200 0 - - -;
+#X floatatom 518 210 5 0 200 0 - - -, f 5;
 #X obj 518 257 s hp-sat.ctrl;
 #X msg 518 231 attack \$1;
 #X text 592 232 ms;
 #X text 195 193 rms;
 #X obj 628 228 cnv 15 100 22 empty empty empty 20 12 0 14 -260818 -66577
 0;
-#X floatatom 634 210 5 0 200 0 - - -;
+#X floatatom 634 210 5 0 200 0 - - -, f 5;
 #X obj 634 257 s hp-sat.ctrl;
 #X text 710 231 ms;
 #X msg 634 231 release \$1;
@@ -402,9 +407,9 @@ on;
 #X msg 674 115 s cos 0;
 #X msg 593 114 s pow 0.25;
 #X msg 577 142 release \$1 \$2;
-#N canvas 0 0 580 547 vu 0;
+#N canvas 0 22 580 547 vu 0;
 #X obj 109 138 vsl 15 48 1 0 0 0 empty empty empty 0 -8 0 8 -258699
--1 -1 2514 1;
+-1 -1 0 1;
 #X obj 109 9 inlet;
 #X connect 1 0 0 0;
 #X coords 0 0 1 1 40 70 1;
@@ -413,7 +418,7 @@ on;
 #X text 287 247 sent to inlet of saturator~;
 #X msg 444 117 s pow 0.25;
 #X obj 137 271 tgl 15 0 empty _hp-sat.cheap empty 0 -6 0 8 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 130 293 cnv 15 100 22 empty empty empty 20 12 0 14 -260818 -66577
 0;
 #X obj 133 321 s hp-sat.ctrl;
