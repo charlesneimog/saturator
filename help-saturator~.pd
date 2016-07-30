@@ -1,7 +1,7 @@
 #N canvas 314 126 758 439 10;
 #X declare -lib saturator;
 #X declare -stdlib zexy;
-#X declare -stdpath extra/zexy;
+#X declare -stdpath zexy;
 #X obj 39 370 saturator~;
 #N canvas 0 50 309 185 volume 0;
 #X obj 51 17 inlet~;
@@ -303,7 +303,7 @@
 #X obj 327 163 s _hp-sat.cheap;
 #X obj 26 191 declare -lib saturator;
 #X obj 40 158 declare -stdlib zexy;
-#X obj 28 137 declare -stdpath extra/zexy;
+#X obj 28 137 declare -stdpath zexy;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 2 0 5 0;
