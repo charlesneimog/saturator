@@ -1,0 +1,82 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-DPD",
+      "-Dpd_saturador_EXPORTS",
+      "-I/usr/include/pd",
+      "-fPIC",
+      "-c",
+      "-o",
+      "CMakeFiles/pd-saturador.dir/src/saturator_td.c.o",
+      "/home/neimog/Documents/Git/saturator/src/saturator_td.c"
+    ],
+    "directory": "/home/neimog/Documents/Git/saturator/build",
+    "file": "/home/neimog/Documents/Git/saturator/src/saturator_td.c",
+    "output": "/home/neimog/Documents/Git/saturator/build/CMakeFiles/pd-saturador.dir/src/saturator_td.c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-DPD",
+      "-Dpd_saturador_EXPORTS",
+      "-I/usr/include/pd",
+      "-fPIC",
+      "-c",
+      "-o",
+      "CMakeFiles/pd-saturador.dir/src/saturator.c.o",
+      "/home/neimog/Documents/Git/saturator/src/saturator.c"
+    ],
+    "directory": "/home/neimog/Documents/Git/saturator/build",
+    "file": "/home/neimog/Documents/Git/saturator/src/saturator.c",
+    "output": "/home/neimog/Documents/Git/saturator/build/CMakeFiles/pd-saturador.dir/src/saturator.c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-DPD",
+      "-Dpd_saturador_EXPORTS",
+      "-I/usr/include/pd",
+      "-fPIC",
+      "-c",
+      "-o",
+      "CMakeFiles/pd-saturador.dir/src/saturator_vu~.c.o",
+      "/home/neimog/Documents/Git/saturator/src/saturator_vu~.c"
+    ],
+    "directory": "/home/neimog/Documents/Git/saturator/build",
+    "file": "/home/neimog/Documents/Git/saturator/src/saturator_vu~.c",
+    "output": "/home/neimog/Documents/Git/saturator/build/CMakeFiles/pd-saturador.dir/src/saturator_vu~.c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-DPD",
+      "-Dpd_saturador_EXPORTS",
+      "-I/usr/include/pd",
+      "-fPIC",
+      "-c",
+      "-o",
+      "CMakeFiles/pd-saturador.dir/src/saturator~.c.o",
+      "/home/neimog/Documents/Git/saturator/src/saturator~.c"
+    ],
+    "directory": "/home/neimog/Documents/Git/saturator/build",
+    "file": "/home/neimog/Documents/Git/saturator/src/saturator~.c",
+    "output": "/home/neimog/Documents/Git/saturator/build/CMakeFiles/pd-saturador.dir/src/saturator~.c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-DPD",
+      "-Dpd_saturador_EXPORTS",
+      "-I/usr/include/pd",
+      "-fPIC",
+      "-c",
+      "-o",
+      "CMakeFiles/pd-saturador.dir/src/saturator_thresh~.c.o",
+      "/home/neimog/Documents/Git/saturator/src/saturator_thresh~.c"
+    ],
+    "directory": "/home/neimog/Documents/Git/saturator/build",
+    "file": "/home/neimog/Documents/Git/saturator/src/saturator_thresh~.c",
+    "output": "/home/neimog/Documents/Git/saturator/build/CMakeFiles/pd-saturador.dir/src/saturator_thresh~.c.o"
+  }
+]
